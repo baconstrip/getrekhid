@@ -40,7 +40,8 @@ public class GamePanel extends JPanel {
             } else if (parent.getGameState() == Rekhid.GameState.POST_MATCH) {
                 parent.getWorld().draw((Graphics2D) g);
                 drawScores((Graphics2D) g);
-
+            } else if (parent.getGameState() == Rekhid.GameState.CONTROLLER_MENU) {
+                parent.getControllerSelect().draw((Graphics2D) g);
             }
 
 

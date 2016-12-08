@@ -1,10 +1,13 @@
 package com.huskygames.rekhid;
 
 import com.huskygames.rekhid.actor.StickMan;
+import com.huskygames.rekhid.menu.CharacterSelect;
+import com.huskygames.rekhid.menu.ControllerSelect;
 import com.huskygames.rekhid.slugger.GamePanel;
 import com.huskygames.rekhid.slugger.actor.AI.FsmProf;
 import com.huskygames.rekhid.slugger.actor.Fighter;
 import com.huskygames.rekhid.slugger.input.ControllerInput;
+import com.huskygames.rekhid.slugger.menu.Menu;
 import com.huskygames.rekhid.slugger.physics.PhysicsManager;
 import com.huskygames.rekhid.slugger.resource.Resource;
 import com.huskygames.rekhid.slugger.resource.ResourceManager;
@@ -17,14 +20,14 @@ import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.text.resources.cldr.sr.FormatData_sr_Latn_ME;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
-import java.awt.*;
+
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+import java.awt.*;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -67,14 +70,13 @@ public class Rekhid extends JFrame {
     private long lastTickTime = 0;
     private GameState state;
     private long tickCount;
-    private MainMenu mainMenu;
+    private Menu mainMenu;
     private World world;
     private StickMan player1;
-
-    // BRIAN ADDED THINGS
     private StickMan AiPlayer;
     private FsmProf firstAI;
     private LinkedList<StickMan> players;
+    private ControllerSelect controllerMenu;
 
     private Rekhid() {
 
@@ -204,7 +206,7 @@ public class Rekhid extends JFrame {
         return controllerManager;
     }
 
-    public MainMenu getMainMenu() {
+    public Menu getMainMenu() {
         return mainMenu;
     }
 
@@ -250,10 +252,13 @@ public class Rekhid extends JFrame {
 
                 // GAMESTATE SPECIFIC
                 switch (state) {
+                    case CONTROLLER_MENU:
+                        controllerMenuTick();
+
                     case MENU:
+                        mainMenuTick();
+
                         SoundThread.getInstance().setBackgroundMusic(Resource.MENU_BG_MUSIC);
-                        //menuTick();
-                        state = GameState.CHARACTER_SELECT;
                         break;
                     case CHARACTER_SELECT:
                         //characterSelectTick();
@@ -269,7 +274,6 @@ public class Rekhid extends JFrame {
                         controllerManager.assignController(controllerManager.getValidControllers().get(0), player1);
                         break;
                     case MATCH:
-                        //this.setSize(Definitions.DEFAULT_WIDTH, Definitions.DEFAULT_HEIGHT);
                         matchTick();
 
                         if (world.getNumLiveFighters() <= 1) {
@@ -306,6 +310,13 @@ public class Rekhid extends JFrame {
         }
     }
 
+    private void controllerMenuTick() {
+        if (controllerMenu == null) {
+            controllerMenu = new ControllerSelect(this);
+        }
+        controllerMenu.tick();
+    }
+
     private void matchTick() {
         world.tick();
         PhysicsManager.getInstance().updateObjects();
@@ -316,10 +327,11 @@ public class Rekhid extends JFrame {
     private void characterSelectTick() {
     }
 
-    private void menuTick() {
+    private void mainMenuTick() {
         if (mainMenu == null) {
-            mainMenu = new MainMenu(this);
+            mainMenu = new CharacterSelect(this);
         }
+        mainMenu.tick();
     }
 
     public GameState getGameState() {
@@ -334,8 +346,13 @@ public class Rekhid extends JFrame {
         return tickCount;
     }
 
+    public ControllerSelect getControllerSelect() {
+        return controllerMenu;
+    }
+
     public enum GameState {
         STARTING,
+        CONTROLLER_MENU,
         MENU,
         CHARACTER_SELECT,
         MATCH,

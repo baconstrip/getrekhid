@@ -15,7 +15,7 @@ public class Definitions {
 
     public static final String NAME = "GET REKHI'D";
 
-    public static final Rekhid.GameState DEFAULT_STATE = Rekhid.GameState.MENU;
+    public static final Rekhid.GameState DEFAULT_STATE = Rekhid.GameState.CONTROLLER_MENU;
 
     public static final int DEFAULT_WIDTH = 1280;
     public static final int DEFAULT_HEIGHT = 720;
@@ -31,10 +31,13 @@ public class Definitions {
 
     public static final DoublePair GRAVITY = new DoublePair(0, 0.09);
 
-    public static final boolean DRAW_HITBOXES = true;
+    public static final boolean DRAW_HITBOXES = false;
+
+    public static final boolean DRAW_PADDING = true;
 
     public static final Color HITBOX_COLOR = new Color(0, 100, 255, 100);
     public static final Color HURTBOX_COLOR = new Color(245, 0, 0, 100);
+    public static final Color PADDING_COLOR = new Color(45, 140, 0, 30);
 
     public static final boolean NOISY_RENDER = false;
     public static final boolean NOISY_COLLIDER = false;

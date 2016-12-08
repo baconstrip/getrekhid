@@ -10,6 +10,10 @@ public enum Resource {
     LEVEL_TERMINAL_BG("images/LevelTerminal.png", Type.IMAGE),
     MAIN_MENU_BG("images/menu1.jpg", Type.IMAGE),
     MENU_BG_MUSIC("music/meganddia.ogg", Type.MUSIC),
+    CHARACTER_SELECT_BG("images/charselbg.png", Type.IMAGE),
+    CONTROLLER_SELECT_BG("images/ctrlselbg.jpg", Type.IMAGE),
+    CONTROLLER_CLIPART("images/controllerclipart.png", Type.IMAGE),
+    KEYBOARD_CLIPART("images/keyboardclipart.png", Type.IMAGE),
 
     KUHLS_HEAD("images/kuhl.jpg", Type.IMAGE),
     //STICK_MAN("spritesheets/sticks.png", Type.SPRITE_SHEET),
