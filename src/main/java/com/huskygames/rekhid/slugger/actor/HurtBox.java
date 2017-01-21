@@ -4,14 +4,14 @@ import com.huskygames.rekhid.slugger.util.DoublePair;
 
 public class HurtBox extends ActorCircle {
     private DoublePair effect;
-    private Actor parentActor;
+    private Fighter parentActor;
     private Attack parentAttack;
     private double damage;
     private int lifetime;
 
     public HurtBox(
             DoublePair offset,
-            Actor parentActor,
+            Fighter parentActor,
             Attack parentAttack,
             double r,
             DoublePair hit,
@@ -30,7 +30,7 @@ public class HurtBox extends ActorCircle {
         return effect;
     }
 
-    public Actor getParentActor() {
+    public Fighter getParentActor() {
         return parentActor;
     }
 

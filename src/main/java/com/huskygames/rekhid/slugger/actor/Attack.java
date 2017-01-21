@@ -13,14 +13,14 @@ public class Attack {
     private DoublePair[][] effects;
     private int[][] area;
     private int[] ticks;
-    private Actor parent;
+    private Fighter parent;
     private int temp;
     private int cur;
     private boolean finished = false;
 
     protected Set<Shape> hurters = new HashSet<>();
 
-    public Attack(DoublePair[][] boxes, int[] stages, int[][] damage, DoublePair[][] launch, int[][]areas, Actor parent){
+    public Attack(DoublePair[][] boxes, int[] stages, int[][] damage, DoublePair[][] launch, int[][]areas, Fighter parent){
         offsets = boxes;
         ticks = stages;
         damages = damage;

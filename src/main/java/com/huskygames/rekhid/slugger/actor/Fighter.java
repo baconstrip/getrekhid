@@ -1,5 +1,6 @@
 package com.huskygames.rekhid.slugger.actor;
 
+import com.huskygames.rekhid.slugger.physics.PhysicsManager;
 import com.huskygames.rekhid.slugger.util.DoublePair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,7 @@ public abstract class Fighter extends Actor {
     protected boolean dead;
     protected boolean disabled;
     protected boolean facingLeft;
+    protected Projectile projectile;
     /*
         While this fighter is attacking, this set keeps track of the other Fighters that have been
         hit already, so that they aren't repeatedly hit each tick by the same attack
@@ -81,24 +83,26 @@ public abstract class Fighter extends Actor {
     public abstract String getName();
 
     public void takeDamage(HurtBox hit) {
-        // double check we're not hurting ourselves
-        if (hit.getParentActor().equals(this)) {
-            return;
+        // determine if we're dealing with a projectile, and handle accordingly
+        Fighter parent;
+        if(hit.getParentActor() instanceof Projectile){
+            parent = ((Projectile) hit.getParentActor()).getParent();
+        }
+        else{
+            parent = hit.getParentActor();
         }
 
-        if (hit.getParentActor() instanceof Fighter) {
-            Fighter parent = (Fighter) hit.getParentActor();
-            // if we've already been hit by this attacker, don't hurt us
-            if (parent.getDamaged().contains(this)) {
-                return;
-            }
-            parent.getDamaged().add(this);
-            damage -= hit.getDamage() * 0.01;
-            velocity.addInPlace(hit.getLaunchVector());
+        // double check we're not hurting ourselves
+        if (parent.equals(this)) {
+            return;
         }
-        else {
-            throw new IllegalArgumentException("Non Fighter attacks not implemented.");
+        // if we've already been hit by this attacker, don't hurt us
+        if (parent.getDamaged().contains(this)) {
+            return;
         }
+        parent.getDamaged().add(this);
+        damage -= hit.getDamage() * 0.01;
+        velocity.addInPlace(hit.getLaunchVector());
     }
 
     public Set<Fighter> getDamaged() {
@@ -116,5 +120,21 @@ public abstract class Fighter extends Actor {
     public void endAnimation(){
         executing = false;
 
+    }
+
+    public boolean hasProjectile(){
+        if(projectile != null){
+            return true;
+        }
+        return false;
+    }
+
+    public Projectile getProjectile(){
+        return projectile;
+    }
+
+    public void removeProjectile(){
+        PhysicsManager.getInstance().removeObject(projectile);
+        projectile = null;
     }
 }

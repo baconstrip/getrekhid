@@ -14,7 +14,8 @@ public enum Resource {
     KUHLS_HEAD("images/kuhl.jpg", Type.IMAGE),
     //STICK_MAN("spritesheets/sticks.png", Type.SPRITE_SHEET),
     STICK_MAN("spritesheets/sticksinvert.png", Type.SPRITE_SHEET),
-    LEOS_HEAD("images/leo.jpg", Type.IMAGE);
+    LEOS_HEAD("images/leo.jpg", Type.IMAGE),
+    TEST_PROJECTILE("spritesheets/bird.png", Type.SPRITE_SHEET);
 
 
     // END RESOURCE LIST

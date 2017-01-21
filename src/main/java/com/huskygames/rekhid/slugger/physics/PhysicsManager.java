@@ -30,6 +30,10 @@ public class PhysicsManager {
         objects.add(object);
     }
 
+    public void removeObject(PhysicsObject object){
+        objects.remove(object);
+    }
+
     public void updateObjects() {
         for (PhysicsObject object : objects) {
             object.update(world);

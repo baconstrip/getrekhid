@@ -89,6 +89,17 @@ public abstract class PhysicsObject implements Collidable, Positionable {
                     }
                 }
             }
+            if(fighter.hasProjectile()){
+                for(Shape hurtBox : fighter.getProjectile().getPain()){
+                    for (Fighter target : world.getFighters()) {
+                        for (Shape hitBox : target.getCollisions()) {
+                            if (CollisionChecker.intersects(hurtBox, hitBox)) {
+                                target.takeDamage((HurtBox) hurtBox);
+                            }
+                        }
+                    }
+                }
+            }
         }
         position.addInPlace(velocity);
     }
