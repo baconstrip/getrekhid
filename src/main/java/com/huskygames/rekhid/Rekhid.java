@@ -224,6 +224,10 @@ public class Rekhid extends JFrame {
         return screenHeight;
     }
 
+    public StickMan getPlayer1() {
+        return player1;
+    }
+
     private void checkControlDevices() {
         Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
         logger.info("Detected usable controllers:");
@@ -252,8 +256,9 @@ public class Rekhid extends JFrame {
                 switch (state) {
                     case MENU:
                         SoundThread.getInstance().setBackgroundMusic(Resource.MENU_BG_MUSIC);
-                        //menuTick();
-                        state = GameState.CHARACTER_SELECT;
+                        menuTick();
+                        //state = GameState.CHARACTER_SELECT;
+                        //comment this out to force main menu
                         break;
                     case CHARACTER_SELECT:
                         //characterSelectTick();
@@ -266,7 +271,7 @@ public class Rekhid extends JFrame {
                         PhysicsManager.getInstance().setWorld(world);
 
                         controllerManager.assignController(controllerManager.getValidControllers().get(0), AiPlayer);
-                        controllerManager.assignController(controllerManager.getValidControllers().get(0), player1);
+                        //controllerManager.assignController(controllerManager.getValidControllers().get(0), player1);
                         break;
                     case MATCH:
                         //this.setSize(Definitions.DEFAULT_WIDTH, Definitions.DEFAULT_HEIGHT);
@@ -320,10 +325,15 @@ public class Rekhid extends JFrame {
         if (mainMenu == null) {
             mainMenu = new MainMenu(this);
         }
+        mainMenu.onTick();
     }
 
     public GameState getGameState() {
         return state;
+    }
+
+    public void setGameState(GameState newState){
+        this.state = newState;
     }
 
     public World getWorld() {
@@ -332,6 +342,10 @@ public class Rekhid extends JFrame {
 
     public long getTickCount() {
         return tickCount;
+    }
+
+    public void setControllerForPlayer1(int controllerNumber){
+        controllerManager.assignController(controllerManager.getValidControllers().get(controllerNumber), player1);
     }
 
     public enum GameState {

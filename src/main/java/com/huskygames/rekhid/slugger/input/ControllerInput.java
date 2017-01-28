@@ -82,7 +82,6 @@ public class ControllerInput {
                 }
 
                 sticks.get(controller.getValue()).setX(controller.getKey().getComponent(gamepadmap.getLeftStickX()).getPollData());
-
             }
         }
     }

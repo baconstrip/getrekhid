@@ -12,7 +12,13 @@ public abstract class Menu implements Drawable {
     private final HashSet<MenuItem> items = new HashSet<>();
     protected Image background;
 
+
+
+
+
+
     public void draw(Graphics2D context) {
+
         if (background != null) {
             context.drawImage(background, 0, 0, null);
         }
@@ -20,6 +26,10 @@ public abstract class Menu implements Drawable {
         for (MenuItem item : items) {
             item.draw(context);
         }
+    }
+
+    public HashSet<MenuItem> getItems() {
+        return items;
     }
 
     public void setBackground(Image background) {
